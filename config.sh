@@ -59,7 +59,7 @@ LATESTARTSERVICE=false
 
 print_modname() {
   ui_print "*******************************"
-  ui_print "     修改 bg_apps_limit 限制    "
+  ui_print "    修改 bg_apps_limit 限制    "
   ui_print "*******************************"
 }
 
