@@ -1,3 +1,5 @@
+v3
+    - 第三版（Magisk v10）
 v2
     - 第二版（Magisk v9 新特性）
 v1

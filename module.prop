@@ -1,8 +1,8 @@
 id=bg_apps_limit-mod
 name=修改 bg_apps_limit 限制
-version=v2
-versionCode=2
+version=v3
+versionCode=3
 author=Ezalor
-description=将后台应用限制修改为 42
+description=将后台应用限制修改为 42 （一加 3 H2OS）
 support=
 donate=

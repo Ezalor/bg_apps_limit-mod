@@ -171,7 +171,7 @@ MODPATH=$MOUNTPATH/$MODID
 
 mkdir -p $INSTALLER
 cd $INSTALLER
-unzip -o "$ZIP" common/* module.prop
+unzip -o "$ZIP" "common/*" module.prop
 
 ##########################################################################################
 # Main
@@ -255,12 +255,12 @@ if (! is_mounted $MOUNTPATH); then
 fi
 
 # Create mod paths
-rm -rf $MODPATH
+rm -rf $MODPATH 2>/dev/null
 mkdir -p $MODPATH
 
 # Copy files
 ui_print "- Copying files"
-unzip -o "$ZIP" system/* -d $MODPATH
+unzip -o "$ZIP" "system/*" -d $MODPATH
 
 # Handle replace folders
 for TARGET in $REPLACE; do
@@ -270,6 +270,11 @@ done
 # Auto Mount
 if ($AUTOMOUNT); then
   mktouch $MODPATH/auto_mount
+fi
+
+# prop files
+if ($PROPFILE); then
+  cp -af $INSTALLER/common/system.prop $MODPATH/system.prop
 fi
 
 # Module info
@@ -297,13 +302,14 @@ ui_print "- Unmounting partitions"
 
 umount $MOUNTPATH
 losetup -d $LOOPDEVICE
-rm -rf $MOUNTPATH
+rmdir $MOUNTPATH
+
 # Shrink the image if possible
 target_size_check $IMG
-NEWDATASIZE=$(((curUsedM / 32 + 2) * 32));
+NEWDATASIZE=$(((curUsedM / 32 + 2) * 32))
 if [ "$curSizeM" -gt "$NEWDATASIZE" ]; then
-  ui_print "- Shrinking $IMG to ${NEWDATASIZE}M...";
-  resize2fs $IMG ${NEWDATASIZE}M;
+  ui_print "- Shrinking $IMG to ${NEWDATASIZE}M..."
+  resize2fs $IMG ${NEWDATASIZE}M
 fi
 
 if (! $BOOTMODE); then
